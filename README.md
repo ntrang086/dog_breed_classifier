@@ -4,13 +4,24 @@
 [image2]: ./images/vgg16_model.png "VGG-16 Model Keras Layers"
 [image3]: ./images/vgg16_model_draw.png "VGG16 Model Figure"
 
-# Classify Dog Breed
+# Dog Breed Classification Using Convolutional Neural Networks
 
 ## Introduction
 
 Build a pipeline, using transfer learning, that can be used within a web or mobile app to process real-world, user-supplied images. Given an image of a dog, the algorithm will identify an estimate of the canine’s breed. If supplied an image of a human, the code will identify the resembling dog breed.
 
 ![Sample Output][image1]
+
+We break the notebook into a few steps:
+
+**Step 0**: Import Datasets
+**Step 1**: Detect Humans
+**Step 2**: Detect Dogs
+**Step 3**: Create a CNN to Classify Dog Breeds (from Scratch)
+**Step 4**: Create a CNN to Classify Dog Breeds (Using VGG16)
+**Step 5**: Create a CNN to Classify Dog Breeds (Using ResNet50)
+**Step 6**: Complete the Pipeline
+**Step 7**: Test the Algorithm
 
 ## Code
 
@@ -21,32 +32,70 @@ The main code is in the notebook `dog_app.ipynb`.
 1. Clone the repository and navigate to the downloaded folder.
 	
 	```	
-		git clone https://github.com/ntrang086/dog_breed_classifier
+		git clone https://github.com/ntrang086/dog_breed_classifier.git
 		cd dog_breed_classifier
 	```
-2. Obtain the necessary Python packages, and switch Keras backend to Tensorflow.
+2. (Optional) **If you are running the project on your local machine (and not using AWS)**, create (and activate) a new environment.
+
+	- __Linux__ (to install with __GPU support__, change `requirements/dog-linux.yml` to `requirements/dog-linux-gpu.yml`): 
+	```
+	conda env create -f requirements/dog-linux.yml
+	source activate dog-project
+	``` 
+	- __Mac__ (to install with __GPU support__, change `requirements/dog-mac.yml` to `requirements/dog-mac-gpu.yml`): 
+	```
+	conda env create -f requirements/dog-mac.yml
+	source activate dog-project
+	``` 
+	**NOTE:** Some Mac users may need to install a different version of OpenCV
+	```
+	conda install --channel https://conda.anaconda.org/menpo opencv3
+	```
+	- __Windows__ (to install with __GPU support__, change `requirements/dog-windows.yml` to `requirements/dog-windows-gpu.yml`):
+	```
+	conda env create -f requirements/dog-windows.yml
+	activate dog-project
+	```
+
+3. (Optional) **If you are running the project on your local machine (and not using AWS)** and Step 2 throws errors, try this __alternative__ step to create your environment.
+
+	- __Linux__ or __Mac__ (to install with __GPU support__, change `requirements/requirements.txt` to `requirements/requirements-gpu.txt`): 
+	```
+	conda create --name dog-project python=3.5
+	source activate dog-project
+	pip install -r requirements/requirements.txt
+	```
+	**NOTE:** Some Mac users may need to install a different version of OpenCV
+	```
+	conda install --channel https://conda.anaconda.org/menpo opencv3
+	```
+	- __Windows__ (to install with __GPU support__, change `requirements/requirements.txt` to `requirements/requirements-gpu.txt`): 
+	```
+	conda create --name dog-project python=3.5
+	activate dog-project
+	pip install -r requirements/requirements.txt
+	```
+
+4. (Optional) __If you plan to install TensorFlow with GPU support on your local machine__, follow [the guide](https://www.tensorflow.org/install/) to install the necessary NVIDIA software on your system.  If you are using an EC2 GPU instance, you can skip this step.
+
+5. (Optional) **If you are using AWS**, install Tensorflow.
+`sudo python3 -m pip install -r requirements/requirements-gpu.txt`
 	
-	For __Mac/OSX__:
-	```
-		conda env create -f requirements/aind-dog-mac.yml
-		source activate aind-dog
+6. Switch [Keras backend](https://keras.io/backend/) to TensorFlow.
+	- __Linux__ or __Mac__: 
+		```
 		KERAS_BACKEND=tensorflow python -c "from keras import backend"
-	```
-
-	For __Linux__:
-	```
-		conda env create -f requirements/aind-dog-linux.yml
-		source activate aind-dog
-		KERAS_BACKEND=tensorflow python -c "from keras import backend"
-	```
-
-	For __Windows__:
-	```
-		conda env create -f requirements/aind-dog-windows.yml
-		activate aind-dog
+		```
+	- __Windows__: 
+		```
 		set KERAS_BACKEND=tensorflow
 		python -c "from keras import backend"
-	```
+		```
+
+7. (Optional) **If you are running the project on your local machine (and not using AWS)**, create an [IPython kernel](http://ipython.readthedocs.io/en/stable/install/kernel_install.html) for the `dog-project` environment. 
+
+`python -m ipykernel install --user --name dog-project --display-name "dog-project"`
+
 
 ## Data
 
@@ -57,7 +106,7 @@ The main code is in the notebook `dog_app.ipynb`.
 ## Run
 
 To open the notebook, use:
-	
-	```
-		jupyter notebook dog_app.ipynb
-	```
+
+`jupyter notebook dog_app.ipynb`
+
+(Optional) **If you are running the project on your local machine (and not using AWS)**, before running code, change the kernel to match the dog-project environment by using the drop-down menu (**Kernel > Change kernel > dog-project**).
